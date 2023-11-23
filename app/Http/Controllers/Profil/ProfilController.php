@@ -69,7 +69,13 @@ class ProfilController extends Controller
     public function edit($id)
     {
         $data = User::find($id);
-        return view('profil.edit', compact('data'));
+
+        if((Auth::user()->id == $data->id) || (Auth::user()->role_id == 1)){
+            return view('profil.edit', compact('data'));
+        }
+        else{
+            abort(403);
+        }
     }
 
     /**

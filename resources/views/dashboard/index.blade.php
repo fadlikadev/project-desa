@@ -4,6 +4,75 @@
     Dashboard
 @endsection
 
+@push('scripts')
+    <!-- FLOT CHARTS -->
+    <script src="{{asset('AdminLTE')}}/plugins/flot/jquery.flot.js"></script>
+    <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+    <script src="{{asset('AdminLTE')}}/plugins/flot/plugins/jquery.flot.resize.js"></script>
+    <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+    <script src="{{asset('AdminLTE')}}/plugins/flot/plugins/jquery.flot.pie.js"></script>
+
+    <script>
+        $(function () {
+          /*
+           * DONUT CHART
+           * -----------
+           */
+      
+          var donutData = [
+            {
+              label: 'Series2',
+              data : 30,
+              color: '#3c8dbc'
+            },
+            {
+              label: 'Series3',
+              data : 20,
+              color: '#0073b7'
+            },
+            {
+              label: 'Series4',
+              data : 50,
+              color: '#00c0ef'
+            }
+          ]
+          $.plot('#donut-chart', donutData, {
+            series: {
+              pie: {
+                show       : true,
+                radius     : 1,
+                innerRadius: 0.5,
+                label      : {
+                  show     : true,
+                  radius   : 2 / 3,
+                  formatter: labelFormatter,
+                  threshold: 0.1
+                }
+      
+              }
+            },
+            legend: {
+              show: false
+            }
+          })
+          /*
+           * END DONUT CHART
+           */
+        })
+
+        /*
+         * Custom Label formatter
+         * ----------------------
+         */
+        function labelFormatter(label, series) {
+          return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+            + label
+            + '<br>'
+            + Math.round(series.percent) + '%</div>'
+        }
+      </script>
+@endpush
+
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -12,7 +81,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Dashboard v2</h1>
+                        <h1 class="m-0">Dashboard</h1>
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-6">
@@ -32,202 +101,249 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+                @if (Auth::user()->role_id == 1)
+                    <!-- Info boxes -->
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total User</span>
+                                    <span class="info-box-number">
+                                        {{$allUser}} Pengguna
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user-check"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">User Terverifikasi</span>
+                                    <span class="info-box-number">{{$userVerified}} Pengguna</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-user-times"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">User Not Verified</span>
+                                    <span class="info-box-number">{{$userNotVerified}} Pengguna</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+
+                        <!-- fix for small devices only -->
+                        <div class="clearfix hidden-md-up"></div>
+                        
+                    </div>
+                    <!-- /.row -->
+                @endif
+
                 <!-- Info boxes -->
-                <div class="row">
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+                <div class="row justify-content-center">
+                    @if (Auth::user()->role_id == 1)
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-boxes"></i></span>
 
-                            <div class="info-box-content">
-                                <span class="info-box-text">CPU Traffic</span>
-                                <span class="info-box-number">
-                                    10<small>%</small>
-                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Barang</span>
+                                    <span class="info-box-number">
+                                        {{$totalBarang}} Aset
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
                             </div>
-                            <!-- /.info-box-content -->
+                            <!-- /.info-box -->
                         </div>
-                        <!-- /.info-box -->
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="info-box mb-3">
-                            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+                        <!-- /.col -->
 
-                            <div class="info-box-content">
-                                <span class="info-box-text">Likes</span>
-                                <span class="info-box-number">41,410</span>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-building"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Fasilitas</span>
+                                    <span class="info-box-number">
+                                        {{$totalFasilitas}} Aset
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
                             </div>
-                            <!-- /.info-box-content -->
+                            <!-- /.info-box -->
                         </div>
-                        <!-- /.info-box -->
-                    </div>
-                    <!-- /.col -->
+                        <!-- /.col -->
+
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-secondary elevation-1"><i class="fas fa-file-download"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Ajuan Peminjaman Barang</span>
+                                    <span class="info-box-number">{{$totalAjuanBarang}} Ajuan</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-dark elevation-1"><i class="fas fa-file-download"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Ajuan Peminjaman Fasilitas</span>
+                                    <span class="info-box-number">{{$totalAjuanFasilitas}} Ajuan</span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                    @endif
 
                     <!-- fix for small devices only -->
                     <div class="clearfix hidden-md-up"></div>
 
+                    <h5 class="text-center col-12 mb-2 mt-1"><strong>Peminjaman Fasilitas & Barang</strong></h5>
+
+                    @if (Auth::user()->role_id != 1)
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-boxes"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Barang</span>
+                                    <span class="info-box-number">
+                                        {{$totalBarang}} Aset
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                    @endif
+
                     <div class="col-12 col-sm-6 col-md-3">
                         <div class="info-box mb-3">
-                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clipboard-check"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Sales</span>
-                                <span class="info-box-number">760</span>
+                                <span class="info-box-text">Peminjaman Barang Disetujui</span>
+                                <span class="info-box-number">{{$ajuanBarangSetuju}} Ajuan</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
                         <!-- /.info-box -->
                     </div>
                     <!-- /.col -->
+
                     <div class="col-12 col-sm-6 col-md-3">
                         <div class="info-box mb-3">
-                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-clipboard-check"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">New Members</span>
-                                <span class="info-box-number">2,000</span>
+                                <span class="info-box-text">Peminjaman Fasilitas Disetujui</span>
+                                <span class="info-box-number">{{$ajuanFasilitasSetuju}} Ajuan</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
                         <!-- /.info-box -->
                     </div>
                     <!-- /.col -->
-                </div>
-                <!-- /.row -->
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title">Monthly Recap Report</h5>
+                    @if (Auth::user()->role_id != 1)
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-building"></i></span>
 
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                                            <i class="fas fa-wrench"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                            <a href="#" class="dropdown-item">Action</a>
-                                            <a href="#" class="dropdown-item">Another action</a>
-                                            <a href="#" class="dropdown-item">Something else here</a>
-                                            <a class="dropdown-divider"></a>
-                                            <a href="#" class="dropdown-item">Separated link</a>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Fasilitas</span>
+                                    <span class="info-box-number">
+                                        {{$totalFasilitas}} Aset
+                                    </span>
                                 </div>
+                                <!-- /.info-box-content -->
                             </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <p class="text-center">
-                                            <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
-                                        </p>
-
-                                        <div class="chart">
-                                            <!-- Sales Chart Canvas -->
-                                            <canvas id="salesChart" height="180" style="height: 180px;"></canvas>
-                                        </div>
-                                        <!-- /.chart-responsive -->
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-md-4">
-                                        <p class="text-center">
-                                            <strong>Goal Completion</strong>
-                                        </p>
-
-                                        <div class="progress-group">
-                                            Add Products to Cart
-                                            <span class="float-right"><b>160</b>/200</span>
-                                            <div class="progress progress-sm">
-                                                <div class="progress-bar bg-primary" style="width: 80%"></div>
-                                            </div>
-                                        </div>
-                                        <!-- /.progress-group -->
-
-                                        <div class="progress-group">
-                                            Complete Purchase
-                                            <span class="float-right"><b>310</b>/400</span>
-                                            <div class="progress progress-sm">
-                                                <div class="progress-bar bg-danger" style="width: 75%"></div>
-                                            </div>
-                                        </div>
-
-                                        <!-- /.progress-group -->
-                                        <div class="progress-group">
-                                            <span class="progress-text">Visit Premium Page</span>
-                                            <span class="float-right"><b>480</b>/800</span>
-                                            <div class="progress progress-sm">
-                                                <div class="progress-bar bg-success" style="width: 60%"></div>
-                                            </div>
-                                        </div>
-
-                                        <!-- /.progress-group -->
-                                        <div class="progress-group">
-                                            Send Inquiries
-                                            <span class="float-right"><b>250</b>/500</span>
-                                            <div class="progress progress-sm">
-                                                <div class="progress-bar bg-warning" style="width: 50%"></div>
-                                            </div>
-                                        </div>
-                                        <!-- /.progress-group -->
-                                    </div>
-                                    <!-- /.col -->
-                                </div>
-                                <!-- /.row -->
-                            </div>
-                            <!-- ./card-body -->
-                            <div class="card-footer">
-                                <div class="row">
-                                    <div class="col-sm-3 col-6">
-                                        <div class="description-block border-right">
-                                            <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
-                                            <h5 class="description-header">$35,210.43</h5>
-                                            <span class="description-text">TOTAL REVENUE</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-sm-3 col-6">
-                                        <div class="description-block border-right">
-                                            <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>
-                                            <h5 class="description-header">$10,390.90</h5>
-                                            <span class="description-text">TOTAL COST</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-sm-3 col-6">
-                                        <div class="description-block border-right">
-                                            <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
-                                            <h5 class="description-header">$24,813.53</h5>
-                                            <span class="description-text">TOTAL PROFIT</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-sm-3 col-6">
-                                        <div class="description-block">
-                                            <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>
-                                            <h5 class="description-header">1200</h5>
-                                            <span class="description-text">GOAL COMPLETIONS</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div>
-                                </div>
-                                <!-- /.row -->
-                            </div>
-                            <!-- /.card-footer -->
+                            <!-- /.info-box -->
                         </div>
-                        <!-- /.card -->
+                        <!-- /.col -->
+                    @endif
+
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-clipboard-check"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Peminjaman Barang Ditolak</span>
+                                <span class="info-box-number">{{$ajuanBarangReject}} Ajuan</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
                     </div>
                     <!-- /.col -->
+
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-clipboard-check"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Peminjaman Barang Waiting</span>
+                                <span class="info-box-number">{{$ajuanBarangWait}} Ajuan</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-clipboard-check"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Peminjaman Fasilitas Waiting</span>
+                                <span class="info-box-number">{{$ajuanFasilitasWait}} Ajuan</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-clipboard-check"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Peminjaman Fasilitas Ditolak</span>
+                                <span class="info-box-number">{{$ajuanFasilitasReject}} Ajuan</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+
                 </div>
                 <!-- /.row -->
 
@@ -235,56 +351,6 @@
                 <div class="row">
                 <!-- Left col -->
                     <div class="col-md-8">
-                        <!-- MAP & BOX PANE -->
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">US-Visitors Report</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body p-0">
-                                <div class="d-md-flex">
-                                    <div class="p-1 flex-fill" style="overflow: hidden">
-                                        <!-- Map will be created here -->
-                                        <div id="world-map-markers" style="height: 325px; overflow: hidden">
-                                            <div class="map"></div>
-                                        </div>
-                                    </div>
-                                    <div class="card-pane-right bg-success pt-2 pb-2 pl-4 pr-4">
-                                        <div class="description-block mb-4">
-                                            <div class="sparkbar pad" data-color="#fff">90,70,90,70,75,80,70</div>
-                                            <h5 class="description-header">8390</h5>
-                                            <span class="description-text">Visits</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                        <div class="description-block mb-4">
-                                            <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
-                                            <h5 class="description-header">30%</h5>
-                                            <span class="description-text">Referrals</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                        <div class="description-block">
-                                            <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
-                                            <h5 class="description-header">70%</h5>
-                                            <span class="description-text">Organic</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div>
-                                    <!-- /.card-pane-right -->
-                                </div>
-                                <!-- /.d-md-flex -->
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
                         <div class="row">
                             <div class="col-md-6">
                                 <!-- DIRECT CHAT -->
@@ -494,70 +560,70 @@
                             <div class="col-md-6">
                                 <!-- USERS LIST -->
                                 <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Latest Members</h3>
+                                    <div class="card-header">
+                                        <h3 class="card-title">Latest Members</h3>
 
-                                    <div class="card-tools">
-                                    <span class="badge badge-danger">8 New Members</span>
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
+                                        <div class="card-tools">
+                                            <span class="badge badge-danger">8 New Members</span>
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body p-0">
-                                    <ul class="users-list clearfix">
-                                    <li>
-                                        <img src="{{asset('AdminLTE')}}/dist/img/user1-128x128.jpg" alt="User Image">
-                                        <a class="users-list-name" href="#">Alexander Pierce</a>
-                                        <span class="users-list-date">Today</span>
-                                    </li>
-                                    <li>
-                                        <img src="{{asset('AdminLTE')}}/dist/img/user8-128x128.jpg" alt="User Image">
-                                        <a class="users-list-name" href="#">Norman</a>
-                                        <span class="users-list-date">Yesterday</span>
-                                    </li>
-                                    <li>
-                                        <img src="{{asset('AdminLTE')}}/dist/img/user7-128x128.jpg" alt="User Image">
-                                        <a class="users-list-name" href="#">Jane</a>
-                                        <span class="users-list-date">12 Jan</span>
-                                    </li>
-                                    <li>
-                                        <img src="{{asset('AdminLTE')}}/dist/img/user6-128x128.jpg" alt="User Image">
-                                        <a class="users-list-name" href="#">John</a>
-                                        <span class="users-list-date">12 Jan</span>
-                                    </li>
-                                    <li>
-                                        <img src="{{asset('AdminLTE')}}/dist/img/user2-160x160.jpg" alt="User Image">
-                                        <a class="users-list-name" href="#">Alexander</a>
-                                        <span class="users-list-date">13 Jan</span>
-                                    </li>
-                                    <li>
-                                        <img src="{{asset('AdminLTE')}}/dist/img/user5-128x128.jpg" alt="User Image">
-                                        <a class="users-list-name" href="#">Sarah</a>
-                                        <span class="users-list-date">14 Jan</span>
-                                    </li>
-                                    <li>
-                                        <img src="{{asset('AdminLTE')}}/dist/img/user4-128x128.jpg" alt="User Image">
-                                        <a class="users-list-name" href="#">Nora</a>
-                                        <span class="users-list-date">15 Jan</span>
-                                    </li>
-                                    <li>
-                                        <img src="{{asset('AdminLTE')}}/dist/img/user3-128x128.jpg" alt="User Image">
-                                        <a class="users-list-name" href="#">Nadia</a>
-                                        <span class="users-list-date">15 Jan</span>
-                                    </li>
-                                    </ul>
-                                    <!-- /.users-list -->
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer text-center">
-                                    <a href="javascript:">View All Users</a>
-                                </div>
-                                <!-- /.card-footer -->
+                                    <!-- /.card-header -->
+                                    <div class="card-body p-0">
+                                        <ul class="users-list clearfix">
+                                            <li>
+                                                <img src="{{asset('AdminLTE')}}/dist/img/user1-128x128.jpg" alt="User Image">
+                                                <a class="users-list-name" href="#">Alexander Pierce</a>
+                                                <span class="users-list-date">Today</span>
+                                            </li>
+                                            <li>
+                                                <img src="{{asset('AdminLTE')}}/dist/img/user8-128x128.jpg" alt="User Image">
+                                                <a class="users-list-name" href="#">Norman</a>
+                                                <span class="users-list-date">Yesterday</span>
+                                            </li>
+                                            <li>
+                                                <img src="{{asset('AdminLTE')}}/dist/img/user7-128x128.jpg" alt="User Image">
+                                                <a class="users-list-name" href="#">Jane</a>
+                                                <span class="users-list-date">12 Jan</span>
+                                            </li>
+                                            <li>
+                                                <img src="{{asset('AdminLTE')}}/dist/img/user6-128x128.jpg" alt="User Image">
+                                                <a class="users-list-name" href="#">John</a>
+                                                <span class="users-list-date">12 Jan</span>
+                                            </li>
+                                            <li>
+                                                <img src="{{asset('AdminLTE')}}/dist/img/user2-160x160.jpg" alt="User Image">
+                                                <a class="users-list-name" href="#">Alexander</a>
+                                                <span class="users-list-date">13 Jan</span>
+                                            </li>
+                                            <li>
+                                                <img src="{{asset('AdminLTE')}}/dist/img/user5-128x128.jpg" alt="User Image">
+                                                <a class="users-list-name" href="#">Sarah</a>
+                                                <span class="users-list-date">14 Jan</span>
+                                            </li>
+                                            <li>
+                                                <img src="{{asset('AdminLTE')}}/dist/img/user4-128x128.jpg" alt="User Image">
+                                                <a class="users-list-name" href="#">Nora</a>
+                                                <span class="users-list-date">15 Jan</span>
+                                            </li>
+                                            <li>
+                                                <img src="{{asset('AdminLTE')}}/dist/img/user3-128x128.jpg" alt="User Image">
+                                                <a class="users-list-name" href="#">Nadia</a>
+                                                <span class="users-list-date">15 Jan</span>
+                                            </li>
+                                        </ul>
+                                        <!-- /.users-list -->
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer text-center">
+                                        <a href="javascript:">View All Users</a>
+                                    </div>
+                                    <!-- /.card-footer -->
                                 </div>
                                 <!--/.card -->
                             </div>
@@ -665,115 +731,96 @@
                     <!-- /.col -->
 
                 <div class="col-md-4">
-                    <!-- Info Boxes Style 2 -->
-                    <div class="info-box mb-3 bg-warning">
-                    <span class="info-box-icon"><i class="fas fa-tag"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Inventory</span>
-                        <span class="info-box-number">5,200</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                    <div class="info-box mb-3 bg-success">
-                    <span class="info-box-icon"><i class="far fa-heart"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Mentions</span>
-                        <span class="info-box-number">92,050</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                    <div class="info-box mb-3 bg-danger">
-                    <span class="info-box-icon"><i class="fas fa-cloud-download-alt"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Downloads</span>
-                        <span class="info-box-number">114,381</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                    <div class="info-box mb-3 bg-info">
-                    <span class="info-box-icon"><i class="far fa-comment"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Direct Messages</span>
-                        <span class="info-box-number">163,921</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-
+                    <!-- USERS LIST -->
                     <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Browser Usage</h3>
+                        <div class="card-header">
+                            <h3 class="card-title">Latest Members</h3>
 
-                        <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                        </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="row">
-                        <div class="col-md-8">
-                            <div class="chart-responsive">
-                            <canvas id="pieChart" height="150"></canvas>
+                            <div class="card-tools">
+                                <span class="badge badge-danger">8 New Members</span>
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
                             </div>
-                            <!-- ./chart-responsive -->
                         </div>
-                        <!-- /.col -->
-                        <div class="col-md-4">
-                            <ul class="chart-legend clearfix">
-                            <li><i class="far fa-circle text-danger"></i> Chrome</li>
-                            <li><i class="far fa-circle text-success"></i> IE</li>
-                            <li><i class="far fa-circle text-warning"></i> FireFox</li>
-                            <li><i class="far fa-circle text-info"></i> Safari</li>
-                            <li><i class="far fa-circle text-primary"></i> Opera</li>
-                            <li><i class="far fa-circle text-secondary"></i> Navigator</li>
+                        <!-- /.card-header -->
+                        <div class="card-body p-0">
+                            <ul class="users-list clearfix">
+                                <li>
+                                    <img src="{{asset('AdminLTE')}}/dist/img/user1-128x128.jpg" alt="User Image">
+                                    <a class="users-list-name" href="#">Alexander Pierce</a>
+                                    <span class="users-list-date">Today</span>
+                                </li>
+                                <li>
+                                    <img src="{{asset('AdminLTE')}}/dist/img/user8-128x128.jpg" alt="User Image">
+                                    <a class="users-list-name" href="#">Norman</a>
+                                    <span class="users-list-date">Yesterday</span>
+                                </li>
+                                <li>
+                                    <img src="{{asset('AdminLTE')}}/dist/img/user7-128x128.jpg" alt="User Image">
+                                    <a class="users-list-name" href="#">Jane</a>
+                                    <span class="users-list-date">12 Jan</span>
+                                </li>
+                                <li>
+                                    <img src="{{asset('AdminLTE')}}/dist/img/user6-128x128.jpg" alt="User Image">
+                                    <a class="users-list-name" href="#">John</a>
+                                    <span class="users-list-date">12 Jan</span>
+                                </li>
+                                <li>
+                                    <img src="{{asset('AdminLTE')}}/dist/img/user2-160x160.jpg" alt="User Image">
+                                    <a class="users-list-name" href="#">Alexander</a>
+                                    <span class="users-list-date">13 Jan</span>
+                                </li>
+                                <li>
+                                    <img src="{{asset('AdminLTE')}}/dist/img/user5-128x128.jpg" alt="User Image">
+                                    <a class="users-list-name" href="#">Sarah</a>
+                                    <span class="users-list-date">14 Jan</span>
+                                </li>
+                                <li>
+                                    <img src="{{asset('AdminLTE')}}/dist/img/user4-128x128.jpg" alt="User Image">
+                                    <a class="users-list-name" href="#">Nora</a>
+                                    <span class="users-list-date">15 Jan</span>
+                                </li>
+                                <li>
+                                    <img src="{{asset('AdminLTE')}}/dist/img/user3-128x128.jpg" alt="User Image">
+                                    <a class="users-list-name" href="#">Nadia</a>
+                                    <span class="users-list-date">15 Jan</span>
+                                </li>
                             </ul>
+                            <!-- /.users-list -->
                         </div>
-                        <!-- /.col -->
+                        <!-- /.card-body -->
+                        <div class="card-footer text-center">
+                            <a href="javascript:">View All Users</a>
                         </div>
-                        <!-- /.row -->
+                        <!-- /.card-footer -->
                     </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer p-0">
-                        <ul class="nav nav-pills flex-column">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                            United States of America
-                            <span class="float-right text-danger">
-                                <i class="fas fa-arrow-down text-sm"></i>
-                                12%</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                            India
-                            <span class="float-right text-success">
-                                <i class="fas fa-arrow-up text-sm"></i> 4%
-                            </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                            China
-                            <span class="float-right text-warning">
-                                <i class="fas fa-arrow-left text-sm"></i> 0%
-                            </span>
-                            </a>
-                        </li>
-                        </ul>
-                    </div>
-                    <!-- /.footer -->
+                    <!--/.card -->
+                    
+                    <!-- Donut chart -->
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="far fa-chart-bar"></i>
+                                Donut Chart
+                            </h3>
+        
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="donut-chart" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.card-body-->
                     </div>
                     <!-- /.card -->
 

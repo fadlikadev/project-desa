@@ -74,9 +74,12 @@
                         <div class="card">
                             <div class="card-header bg-info">
                                 <h3 class="card-title">Data Barang Desa</h3>
-                                <a href="{{url('/data-barang/tambah')}}">
-                                    <button class="btn btn-sm btn-success float-right shadow">Tambah</button>
-                                </a>
+
+                                @if (Auth::user()->role_id == 1)
+                                    <a href="{{url('/data-barang/tambah')}}">
+                                        <button class="btn btn-sm btn-success float-right shadow">Tambah</button>
+                                    </a>
+                                @endif
                             </div>
                             <!-- /.card-header -->
                         <div class="card-body">
@@ -90,7 +93,10 @@
                                         <th class="text-center align-middle">Tersedia</th>
                                         <th class="text-center align-middle">Dipinjam</th>
                                         <th class="text-center align-middle">Total Barang</th>
-                                        <th class="text-center align-middle">Action</th>
+
+                                        @if (Auth::user()->role_id == 1)
+                                            <th class="text-center align-middle">Action</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -129,10 +135,13 @@
                                                 <td class="text-center align-middle">{{$item->jumlah_barang}}</td>
                                             @endif
 
-                                            <td class="text-center align-middle">
-                                                <a href="{{url('/data-barang/edit/' . $item->id)}}"><button class="btn btn-sm btn-success mx-1"><i class="fas fa-edit"></i></button></a>
-                                                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-hapus{{$item->id}}"><i class="fas fa-trash-alt"></i></button>
-                                            </td>
+                                            @if (Auth::user()->role_id == 1)
+                                                <td class="text-center align-middle">
+                                                    <a href="{{url('/data-barang/edit/' . $item->id)}}"><button class="btn btn-sm btn-success mx-1"><i class="fas fa-edit"></i></button></a>
+
+                                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-hapus{{$item->id}}"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            @endif
                                         </tr>
 
                                         <!-- Modal Hapus -->

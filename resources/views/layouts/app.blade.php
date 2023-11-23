@@ -123,24 +123,25 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item">
-                                <a href="{{ url('/data-barang') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-boxes"></i>
-                                    <p>
-                                        Data Barang
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ url('/data-fasilitas') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-building"></i>
-                                    <p>
-                                        Data Fasilitas
-                                    </p>
-                                </a>
-                            </li>
                         @endif
+                        
+                        <li class="nav-item">
+                            <a href="{{ url('/data-barang') }}" class="nav-link">
+                                <i class="nav-icon fas fa-boxes"></i>
+                                <p>
+                                    Data Barang
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ url('/data-fasilitas') }}" class="nav-link">
+                                <i class="nav-icon fas fa-building"></i>
+                                <p>
+                                    Data Fasilitas
+                                </p>
+                            </a>
+                        </li>
                             
                         <li class="nav-item">
                             <a href="{{ url('/data-peminjaman') }}" class="nav-link">

@@ -16,9 +16,19 @@ class DataPeminjamanController extends Controller
 {
     public function index()
     {
+        // Admin
         $dataPinjamBarang = DataPeminjamanBarang::orderBy('created_at', 'desc')->get();
         $dataPinjamFasilitas = DataPeminjamanFasilitas::orderBy('created_at', 'desc')->get();
-        return view('data-peminjaman.index', compact('dataPinjamBarang', 'dataPinjamFasilitas'));
+
+        // User
+        $dataPinjamBarangUser = DataPeminjamanBarang::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        $dataPinjamFasilitasUser = DataPeminjamanFasilitas::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+
+        if(Auth::user()->role_id == 1){
+            return view('data-peminjaman.index', compact('dataPinjamBarang', 'dataPinjamFasilitas'));
+        }else{
+            return view('data-peminjaman.index', compact('dataPinjamBarangUser', 'dataPinjamFasilitasUser'));
+        }
     }
 
     public function createPinjamanBarang()
@@ -70,9 +80,15 @@ class DataPeminjamanController extends Controller
     public function editBarang($id)
     {
         $dataPinjaman = DataPeminjamanBarang::find($id);
+        $user = User::where('id', $dataPinjaman->user_id)->first();
         $dataBarang = DataBarang::orderBy('nama_barang', 'asc')->get();
         $peminjams = User::where('role_id', 2)->get();
-        return view('data-peminjaman.barang.edit', compact('dataBarang', 'peminjams', 'dataPinjaman'));
+
+        if((Auth::user()->id == $user->id) || (Auth::user()->role_id == 1)){
+            return view('data-peminjaman.barang.edit', compact('dataBarang', 'peminjams', 'dataPinjaman'));
+        }else{
+            abort(403);
+        }
     }
 
     public function updateBarang(Request $request, $id)
@@ -350,9 +366,15 @@ class DataPeminjamanController extends Controller
     public function editFasilitas($id)
     {
         $dataPinjaman = DataPeminjamanFasilitas::find($id);
+        $user = User::where('id', $dataPinjaman->user_id)->first();
         $dataFasilitas = DataFasilitas::orderBy('nama_fasilitas', 'asc')->get();
         $peminjams = User::where('role_id', 2)->get();
-        return view('data-peminjaman.fasilitas.edit', compact('dataFasilitas', 'peminjams', 'dataPinjaman'));
+
+        if((Auth::user()->id == $user->id) || (Auth::user()->role_id == 1)){
+            return view('data-peminjaman.fasilitas.edit', compact('dataFasilitas', 'peminjams', 'dataPinjaman'));
+        }else{
+            abort(403);
+        }
     }
 
     public function updateFasilitas(Request $request, $id)

@@ -122,11 +122,18 @@
                                         <label for="user_id" class="col-sm-12 col-lg-3 col-form-label">Nama Peminjam</label>
                                         <div class="col-sm-12 col-lg-8">
                                             <select name="user_id" id="" class="select2 form-control @error ('user_id') is-invalid @enderror">
-                                                <option value="" disabled selected>-- Pilih Peminjam --</option>
+                                                
+                                                @if (Auth::user()->role_id == 1)
+                                                    <option value="" disabled selected>-- Pilih Peminjam --</option>
+                                                    @foreach ($peminjams as $item)
+                                                        <option value="{{$item->id}}" {{ old('user_id') == $item->id ? "selected" : "" }}>{{$item->nama_lengkap}}</option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="" disabled>-- Pilih Peminjam --</option>
 
-                                                @foreach ($peminjams as $item)
-                                                    <option value="{{$item->id}}" {{ old('user_id') == $item->id ? "selected" : "" }}>{{$item->nama_lengkap}}</option>
-                                                @endforeach
+                                                    <option value="{{Auth::user()->id}}" {{ old('user_id') == $item->id ? "selected" : "" }} selecteed>{{Auth::user()->nama_lengkap}}</option>
+                                                @endif
+                                                
                                             </select>
 
                                             @error('user_id')

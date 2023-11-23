@@ -96,7 +96,7 @@
                                         @foreach ($data as $item)
                                             <tr>
                                                 <td class="text-center align-middle">
-                                                    <img src="{{asset('assets/profil/foto/' . $item->biodata->foto)}}" alt="Foto Profil" width="150px">
+                                                    <img src="{{asset('assets/profil/foto/' . $item->biodata->foto)}}" alt="Foto Profil" width="125px">
                                                 </td>
 
                                                 <td class="text-center align-middle">{{$item->nama_lengkap}}</td>

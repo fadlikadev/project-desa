@@ -15,7 +15,7 @@ class PenggunaController extends Controller
 {
     public function index()
     {
-        $data = User::all();
+        $data = User::where('role_id', 2)->get();
         return view('pengguna.index', compact('data'));
     }
 

@@ -134,6 +134,45 @@ Route::middleware(['auth', 'verified_user'])->group(function()
             Route::put('/{id}',[ProfilController::class,'update']);
         });
 
+        Route::prefix('data-barang')->group(function() 
+        {
+            Route::get('/',[DataBarangController::class,'index']);
+        });
+
+        Route::prefix('data-fasilitas')->group(function() 
+        {
+            Route::get('/',[DataFasilitasController::class,'index']);
+        });
+
+        Route::prefix('data-peminjaman')->group(function() 
+        {
+            Route::get('/',[DataPeminjamanController::class,'index']);
+
+            // Barang
+            Route::prefix('barang')->group(function() 
+            {
+                Route::get('/tambah',[DataPeminjamanController::class,'createPinjamanBarang']);
+                Route::post('/', [DataPeminjamanController::class, 'storePinjamanBarang']);
+                Route::post('/getbarang',[DataPeminjamanController::class,'getbarang']);
+                Route::put('/approve/{id}',[DataPeminjamanController::class,'approveBarang']);
+                Route::get('/edit/{id}',[DataPeminjamanController::class,'editBarang']);
+                Route::put('/{id}',[DataPeminjamanController::class,'updateBarang']);
+                Route::delete('/{id}',[DataPeminjamanController::class,'destroyBarang']);
+            });
+
+            // Fasilitas
+            Route::prefix('fasilitas')->group(function() 
+            {
+                Route::get('/tambah',[DataPeminjamanController::class,'createPinjamanFasilitas']);
+                Route::post('/', [DataPeminjamanController::class, 'storePinjamanFasilitas']);
+                Route::post('/getFasilitas',[DataPeminjamanController::class,'getFasilitas']);
+                Route::put('/approve/{id}',[DataPeminjamanController::class,'approveFasilitas']);
+                Route::get('/edit/{id}',[DataPeminjamanController::class,'editFasilitas']);
+                Route::put('/{id}',[DataPeminjamanController::class,'updateFasilitas']);
+                Route::delete('/{id}',[DataPeminjamanController::class,'destroyFasilitas']);
+            });
+        });
+
         Route::prefix('contact-person')->group(function()
         {
             Route::get('/',[NarahubungController::class,'index']);
