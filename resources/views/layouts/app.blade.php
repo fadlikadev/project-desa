@@ -3,8 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title') - Inventory Desa</title>
-    <link rel="icon" href="{{asset('assets/web-config/pancasila.png')}}">
+
+    @php
+        $aplikasi = App\Models\ApplicationName::first();
+    @endphp
+    <title>@yield('title') - {{$aplikasi->application_owner}}</title>
+    <link rel="icon" href="{{asset('assets/web-config/' . $aplikasi->application_logo)}}">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -31,12 +35,12 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
+                {{-- <li class="nav-item d-none d-sm-inline-block">
                     <a href="index3.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
-                </li>
+                </li> --}}
             </ul>
 
             <!-- Right navbar links -->
@@ -59,8 +63,8 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
-                <img src="{{asset('assets/web-config/pancasila.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">Inventory Desa</span>
+                <img src="{{asset('assets/web-config/' . $aplikasi->application_logo)}}" alt="Website Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">{{$aplikasi->application_name}}</span>
             </a>
 
             <!-- Sidebar -->
@@ -99,10 +103,19 @@
                                 </p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="{{ url('/profile/' . Auth::user()->id) }}" class="nav-link">
+                                <i class="nav-icon fas fa-user-circle"></i>
+                                <p>
+                                    Profil
+                                </p>
+                            </a>
+                        </li>
                         
                         @if (Auth::user()->role_id == 1)
                             <li class="nav-item">
-                                <a href="{{ url('/pendaftar') }}" class="nav-link">
+                                <a href="{{ url('/pengguna') }}" class="nav-link">
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>
                                         Pengguna
@@ -128,145 +141,15 @@
                                 </a>
                             </li>
                         @endif
-
-                        @if (Auth::user()->role_id == 1)
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-file"></i>
-                                    <p>
-                                        Tahapan Pendaftaran
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ url('/tahap-1/' . Auth::user()->id) }}" class="nav-link">
-                                            <i class="nav-icon fas fa-file"></i>
-                                            <p>
-                                                Tahap 1 : Biodata
-                                            </p>
-                                        </a>
-                                    </li>
-                    
-                                    <li class="nav-item">
-                                        <a href="{{ url('/tahap-2/' . Auth::user()->id) }}" class="nav-link">
-                                            <i class="nav-icon fas fa-file"></i>
-                                            <p>
-                                                Tahap 2 : Alamat
-                                            </p>
-                                        </a>
-                                    </li>
-                    
-                                    <li class="nav-item">
-                                        <a href="{{ url('/tahap-3/' . Auth::user()->id) }}" class="nav-link">
-                                            <i class="nav-icon fas fa-file"></i>
-                                            <p>
-                                                Tahap 3 : Asal Sekolah
-                                            </p>
-                                        </a>
-                                    </li>
-                    
-                                    <li class="nav-item">
-                                        <a href="{{ url('/tahap-4/' . Auth::user()->id) }}" class="nav-link">
-                                            <i class="nav-icon fas fa-file"></i>
-                                            <p>
-                                                Tahap 4 : Data Orangtua
-                                            </p>
-                                        </a>
-                                    </li>
-                    
-                                    <li class="nav-item">
-                                        <a href="{{ url('/tahap-5/' . Auth::user()->id) }}" class="nav-link">
-                                            <i class="nav-icon fas fa-file"></i>
-                                            <p>
-                                                Tahap 5 : Data Nilai
-                                            </p>
-                                        </a>
-                                    </li>
-                    
-                                    <li class="nav-item">
-                                        <a href="{{ url('/tahap-6/' . Auth::user()->id) }}" class="nav-link">
-                                            <i class="nav-icon fas fa-file"></i>
-                                            <p>
-                                                Tahap 6 : Foto
-                                            </p>
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="{{ url('/tahap-7/' . Auth::user()->id) }}" class="nav-link">
-                                            <i class="nav-icon fas fa-file"></i>
-                                            <p>
-                                                Tahap 7 : Verifikasi
-                                            </p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @else
-                            <li class="nav-item">
-                                <a href="{{ url('/tahap-1/' . Auth::user()->id) }}" class="nav-link">
-                                    <i class="nav-icon fas fa-file"></i>
-                                    <p>
-                                        Tahap 1 : Biodata
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ url('/tahap-2/' . Auth::user()->id) }}" class="nav-link">
-                                    <i class="nav-icon fas fa-file"></i>
-                                    <p>
-                                        Tahap 2 : Alamat
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ url('/tahap-3/' . Auth::user()->id) }}" class="nav-link">
-                                    <i class="nav-icon fas fa-file"></i>
-                                    <p>
-                                        Tahap 3 : Asal Sekolah
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ url('/tahap-4/' . Auth::user()->id) }}" class="nav-link">
-                                    <i class="nav-icon fas fa-file"></i>
-                                    <p>
-                                        Tahap 4 : Data Orangtua
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ url('/tahap-5/' . Auth::user()->id) }}" class="nav-link">
-                                    <i class="nav-icon fas fa-file"></i>
-                                    <p>
-                                        Tahap 5 : Data Nilai
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ url('/tahap-6/' . Auth::user()->id) }}" class="nav-link">
-                                    <i class="nav-icon fas fa-file"></i>
-                                    <p>
-                                        Tahap 6 : Pas Photo
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ url('/tahap-7/' . Auth::user()->id) }}" class="nav-link">
-                                    <i class="nav-icon fas fa-file"></i>
-                                    <p>
-                                        Tahap 7 : Verifikasi
-                                    </p>
-                                </a>
-                            </li>
-                        @endif
+                            
+                        <li class="nav-item">
+                            <a href="{{ url('/data-peminjaman') }}" class="nav-link">
+                                <i class="nav-icon fas fa-file-download"></i>
+                                <p>
+                                    Data Peminjaman
+                                </p>
+                            </a>
+                        </li>
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -284,12 +167,6 @@
                                         <a href="{{url('/data-aplikasi')}}" class="nav-link">
                                         <i class="nav-icon fas fa-wrench"></i>
                                             <p>Data Aplikasi</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{url('/status-aplikasi')}}" class="nav-link">
-                                        <i class="nav-icon fas fa-wrench"></i>
-                                            <p>Status Aplikasi</p>
                                         </a>
                                     </li>
                                 @endif
@@ -340,10 +217,10 @@
 
         <!-- Main Footer -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2023 <a href="https://instagram.com/rhie.kenji" target="_blank">Inventory Desa</a>.</strong>
+            <strong>Copyright &copy; 2023 <a href="{{$aplikasi->link_application_developer}}" target="_blank">{{$aplikasi->application_developer}}</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 1.0.0
+                <b>Version</b> {{$aplikasi->application_version}}
             </div>
         </footer>
     </div>

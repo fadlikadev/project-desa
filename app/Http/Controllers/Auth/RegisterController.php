@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Biodata;
+use File;
+use Alert;
 
 class RegisterController extends Controller
 {
@@ -53,6 +57,10 @@ class RegisterController extends Controller
             'nama_lengkap' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'jenis_kelamin' => ['required'],
+            'no_hp' => ['required', 'unique:biodatas'],
+            'foto' => ['required', 'mimes:jpg,jpeg,png'],
+            'nik' => ['required', 'unique:biodatas'],
         ]);
     }
 
@@ -64,10 +72,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'nama_lengkap' => $data['nama_lengkap'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $request = request();
+        $file = $request->file('foto');
+        $nama = $user->nama_lengkap;
+        $imgName = $nama . '-' . date('dmYHis') . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('assets/profil/foto'),$imgName);
+
+        Biodata::create([
+            'user_id' => $user->id,
+            'nik' => $data['nik'],
+            'jenis_kelamin' => $data['jenis_kelamin'],
+            'no_hp' => $data['no_hp'],
+            'foto' => $imgName,
+        ]);
+
+        return $user;
     }
 }

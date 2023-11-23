@@ -101,8 +101,34 @@
                                             <td class="text-center align-middle">{{$item->nama_barang}}</td>
                                             <td class="text-center align-middle">{{$item->satuan_barang}}</td>
                                             <td class="text-center align-middle">{{$item->jumlah_barang}}</td>
-                                            <td class="text-center align-middle"></td>
-                                            <td class="text-center align-middle"></td>
+
+                                            <!-- Logika Penghitungan Barang -->
+                                            @if ($item->pinjamans()->where('status_pinjaman', 'Disetujui')->exists())
+                                                <!-- Menghitung Jumlah Barang Yang Dipinjam -->
+                                                @php
+                                                    $pinjaman = $item->pinjamans()->where('status_pinjaman', 'Disetujui')->get();
+
+                                                    $totalDipinjam = 0;
+                                                    $jumlahDataPinjaman = $pinjaman->count(); // 2
+                                                    for ($a=0; $a < $jumlahDataPinjaman; $a++) { 
+                                                        $totalDipinjam = $totalDipinjam + $pinjaman[$a]->jumlah_pinjaman;
+                                                    }
+
+                                                    // Total Aset Barang
+                                                    $totalBarang = $item->jumlah_barang + $totalDipinjam;
+                                                @endphp
+
+                                                <td class="text-center align-middle">
+                                                    {{$totalDipinjam}}
+                                                </td>
+                                                <td class="text-center align-middle">{{$totalBarang}}</td>
+                                            @else
+                                                <td class="text-center align-middle">
+                                                    0
+                                                </td>
+                                                <td class="text-center align-middle">{{$item->jumlah_barang}}</td>
+                                            @endif
+
                                             <td class="text-center align-middle">
                                                 <a href="{{url('/data-barang/edit/' . $item->id)}}"><button class="btn btn-sm btn-success mx-1"><i class="fas fa-edit"></i></button></a>
                                                 <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-hapus{{$item->id}}"><i class="fas fa-trash-alt"></i></button>

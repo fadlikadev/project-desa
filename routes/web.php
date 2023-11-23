@@ -6,6 +6,12 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DataBarang\DataBarangController;
 use App\Http\Controllers\DataFasilitas\DataFasilitasController;
+use App\Http\Controllers\DataPeminjaman\DataPeminjamanController;
+use App\Http\Controllers\Pengguna\PenggunaController;
+use App\Http\Controllers\Profil\ProfilController;
+use App\Http\Controllers\DataAplikasi\DataAplikasiController;
+use App\Http\Controllers\Akun\UbahPassword\UbahPasswordController;
+use App\Http\Controllers\Narahubung\NarahubungController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,16 +42,16 @@ Route::middleware(['superadmin'])->group(function()
             Route::put('/{id}',[StatusAplikasiController::class,'update']);
         });
 
-        Route::prefix('pendaftar')->group(function() 
+        Route::prefix('pengguna')->group(function() 
         {
-            Route::get('/',[PendaftarController::class,'index']);
-            Route::put('/verifikasi-data/{id}',[PendaftarController::class,'verifikasiData']);
-            Route::put('/verifikasi/{id}',[PendaftarController::class,'verifikasi']);
-            Route::get('/tambah',[PendaftarController::class,'create']);
-            Route::post('/',[PendaftarController::class,'store']);
-            Route::get('/edit/{id}',[PendaftarController::class,'edit']);
-            Route::put('/{id}',[PendaftarController::class,'update']);
-            Route::delete('/{id}',[PendaftarController::class,'destroy']);
+            Route::get('/',[PenggunaController::class,'index']);
+            Route::put('/verifikasi-data/{id}',[PenggunaController::class,'verifikasiData']);
+            Route::put('/verifikasi/{id}',[PenggunaController::class,'verifikasi']);
+            Route::get('/tambah',[PenggunaController::class,'create']);
+            Route::post('/',[PenggunaController::class,'store']);
+            Route::get('/edit/{id}',[PenggunaController::class,'edit']);
+            Route::put('/{id}',[PenggunaController::class,'update']);
+            Route::delete('/{id}',[PenggunaController::class,'destroy']);
         });
 
         Route::prefix('contact-person')->group(function()
@@ -62,13 +68,6 @@ Route::middleware(['superadmin'])->group(function()
             Route::get('/',[DataAplikasiController::class,'index']);
             Route::get('/edit/{id}',[DataAplikasiController::class,'edit']);
             Route::put('/{id}',[DataAplikasiController::class,'update']);
-        });
-
-        Route::prefix('status-aplikasi')->group(function() 
-        {
-            Route::get('/',[StatusAplikasiController::class,'index']);
-            Route::get('/edit/{id}',[StatusAplikasiController::class,'edit']);
-            Route::put('/{id}',[StatusAplikasiController::class,'update']);
         });
 
         Route::prefix('data-barang')->group(function() 
@@ -90,6 +89,35 @@ Route::middleware(['superadmin'])->group(function()
             Route::put('/{id}',[DataFasilitasController::class,'update']);
             Route::delete('/{id}',[DataFasilitasController::class,'destroy']);
         });
+
+        Route::prefix('data-peminjaman')->group(function() 
+        {
+            Route::get('/',[DataPeminjamanController::class,'index']);
+
+            // Barang
+            Route::prefix('barang')->group(function() 
+            {
+                Route::get('/tambah',[DataPeminjamanController::class,'createPinjamanBarang']);
+                Route::post('/', [DataPeminjamanController::class, 'storePinjamanBarang']);
+                Route::post('/getbarang',[DataPeminjamanController::class,'getbarang']);
+                Route::put('/approve/{id}',[DataPeminjamanController::class,'approveBarang']);
+                Route::get('/edit/{id}',[DataPeminjamanController::class,'editBarang']);
+                Route::put('/{id}',[DataPeminjamanController::class,'updateBarang']);
+                Route::delete('/{id}',[DataPeminjamanController::class,'destroyBarang']);
+            });
+
+            // Fasilitas
+            Route::prefix('fasilitas')->group(function() 
+            {
+                Route::get('/tambah',[DataPeminjamanController::class,'createPinjamanFasilitas']);
+                Route::post('/', [DataPeminjamanController::class, 'storePinjamanFasilitas']);
+                Route::post('/getFasilitas',[DataPeminjamanController::class,'getFasilitas']);
+                Route::put('/approve/{id}',[DataPeminjamanController::class,'approveFasilitas']);
+                Route::get('/edit/{id}',[DataPeminjamanController::class,'editFasilitas']);
+                Route::put('/{id}',[DataPeminjamanController::class,'updateFasilitas']);
+                Route::delete('/{id}',[DataPeminjamanController::class,'destroyFasilitas']);
+            });
+        });
     });
 });
 
@@ -99,69 +127,11 @@ Route::middleware(['auth', 'verified_user'])->group(function()
     {
         Route::get('/dashboard',[HomeController::class,'index']);
 
-        Route::prefix('tahap-1')->group(function() 
+        Route::prefix('profile')->group(function()
         {
-            Route::get('/{id}',[BiodataController::class,'indexBio']);
-            Route::get('/edit/{id}',[BiodataController::class,'editBio']);
-            Route::put('/{id}',[BiodataController::class,'updateBio']);
-        });
-
-        Route::prefix('tahap-2')->group(function() 
-        {
-            Route::get('/{id}',[BiodataController::class,'indexAlamat']);
-            Route::get('/edit/{id}',[BiodataController::class,'editAlamat']);
-            Route::put('/{id}',[BiodataController::class,'updateAlamat']);
-        });
-
-        Route::prefix('tahap-3')->group(function() 
-        {
-            Route::get('/{id}',[RiwayatPendidikanController::class,'index']);
-            Route::get('/edit/{id}',[RiwayatPendidikanController::class,'edit']);
-            Route::put('/{id}',[RiwayatPendidikanController::class,'update']);
-        });
-
-        Route::prefix('tahap-4')->group(function() 
-        {
-            Route::get('/{id}',[DataOrangTuaController::class,'index']);
-            Route::get('/edit/{id}',[DataOrangTuaController::class,'edit']);
-            Route::put('/{id}',[DataOrangTuaController::class,'update']);
-        });
-
-        Route::prefix('tahap-5')->group(function() 
-        {
-            Route::get('/{id}',[DataNilaiController::class,'index']);
-
-            Route::prefix('bahasa-indonesia')->group(function() 
-            {
-                Route::get('/edit/{id}',[DataNilaiController::class,'editBI']);
-                Route::put('/{id}',[DataNilaiController::class,'updateBI']);
-            });
-
-            Route::prefix('nilai-matematika')->group(function() 
-            {
-                Route::get('/edit/{id}',[DataNilaiController::class,'editMtk']);
-                Route::put('/{id}',[DataNilaiController::class,'updateMtk']);
-            });
-
-            Route::prefix('nilai-ipa')->group(function() 
-            {
-                Route::get('/edit/{id}',[DataNilaiController::class,'editIpa']);
-                Route::put('/{id}',[DataNilaiController::class,'updateIpa']);
-            });
-        });
-
-        Route::prefix('tahap-6')->group(function() 
-        {
-            Route::get('/{id}',[FotoSiswaController::class,'index']);
-            Route::get('/edit/{id}',[FotoSiswaController::class,'edit']);
-            Route::put('/{id}',[FotoSiswaController::class,'update']);
-        });
-
-        Route::prefix('tahap-7')->group(function() 
-        {
-            Route::get('/{id}',[VerifikasiDataController::class,'index']);
-            Route::get('/edit/{id}',[VerifikasiDataController::class,'edit']);
-            Route::put('/{id}',[VerifikasiDataController::class,'update']);
+            Route::get('/{id}',[ProfilController::class,'index']);
+            Route::get('/edit/{id}',[ProfilController::class,'edit']);
+            Route::put('/{id}',[ProfilController::class,'update']);
         });
 
         Route::prefix('contact-person')->group(function()

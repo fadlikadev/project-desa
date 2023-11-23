@@ -19,7 +19,6 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('role_id')->default('2');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->string('email')->unique();
-            $table->boolean('status_verifikasi')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

@@ -3,8 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Inventory Desa | Register</title>
-    <link rel="icon" href="{{asset('assets/web-config/pancasila.png')}}">
+
+    @php
+        $aplikasi = App\Models\ApplicationName::first();
+    @endphp
+    <title>Login - {{$aplikasi->application_owner}}</title>
+    <link rel="icon" href="{{asset('assets/web-config/' . $aplikasi->application_logo)}}">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -18,15 +22,15 @@
 <body class="hold-transition register-page">
     <div class="register-box">
         <div class="register-logo">
-            <img src="{{asset('assets/web-config/pancasila.png')}}" alt="Logo Desa" width="100px"><br>
-            <a href="{{url('/')}}"><b>Inventory</b> Desa</a>
+            <img src="{{asset('assets/web-config/' . $aplikasi->application_logo)}}" alt="Logo Desa" width="100px"><br>
+            <a href="{{url('/')}}"><b>{{$aplikasi->application_name}}</b> <br>{{$aplikasi->application_owner}}</a>
         </div>
 
         <div class="card">
             <div class="card-body register-card-body">
                 <p class="login-box-msg">Daftar akun baru</p>
 
-                <form action="{{ route('register') }}" method="post">
+                <form action="{{ route('register') }}" method="post" enctype="multipart/form-data">
                     @csrf
 
                     <div class="input-group mb-3">
@@ -39,6 +43,39 @@
                         </div>
 
                         @error('nama_lengkap')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input id="nik" type="text" class="form-control @error('nik') is-invalid @enderror" name="nik" value="{{ old('nik') }}" required autocomplete="nik" autofocus placeholder="NIK KTP">
+
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-id-card"></span>
+                            </div>
+                        </div>
+
+                        @error('nik')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input id="foto" type="file" class="form-control @error('foto') is-invalid @enderror" name="foto" required autocomplete="foto">
+                        
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <b class="text-danger mr-2"><i><small>*pas photo KTP</small></i></b>
+                                <span class="fas fa-portrait"></span>
+                            </div>
+                        </div>
+
+                        @error('foto')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

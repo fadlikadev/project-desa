@@ -61,7 +61,7 @@
                                     <div class="form-group row">
                                         <label for="nama_fasilitas" class="col-sm-12 col-lg-3 col-form-label">Nama Fasilitas</label>
                                         <div class="col-sm-12 col-lg-8">
-                                            <input type="text" class="form-control @error ('nama_fasilitas') is-invalid @enderror" id="nama_fasilitas" name="nama_fasilitas" placeholder="Masukkan Kode Fasilitas" value="{{old('nama_fasilitas')}}">
+                                            <input type="text" class="form-control @error ('nama_fasilitas') is-invalid @enderror" id="nama_fasilitas" name="nama_fasilitas" placeholder="Masukkan Nama Fasilitas" value="{{old('nama_fasilitas')}}">
 
                                             @error('nama_fasilitas')
                                                 <b class="text-danger text-sm">{{$message}}</b>

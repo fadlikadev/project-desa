@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Alert;
 use Auth;
 use App\Models\DataBarang;
+use App\Models\DataPeminjamanBarang;
 
 class DataBarangController extends Controller
 {
@@ -17,7 +18,7 @@ class DataBarangController extends Controller
      */
     public function index()
     {
-        $data = DataBarang::all();
+        $data = DataBarang::orderBy('kode_barang', 'asc')->get();
         return view('data-barang.index', compact('data'));
     }
 

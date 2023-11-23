@@ -26,10 +26,10 @@ class CreateApplicationNamesTable extends Migration
         });
 
         DB::table('application_names')->insert([
-            'application_logo' => 'logo_smp.png', 
-            'application_name' => 'PPDB SMPN 1 Tanjungsiang',
-            'application_nickname' => 'PPDB',
-            'application_owner' => 'SMPN 1 Tanjungsiang',
+            'application_logo' => 'pancasila.png', 
+            'application_name' => 'Peminjaman Barang Desa',
+            'application_nickname' => 'Inventory Desa',
+            'application_owner' => 'Desa Bojongsoang',
             'application_version' => '1.0.0',
             'application_developer' => 'Kenji Matsuya',
             'link_application_developer' => 'https://www.instagram.com/rhie.kenji',

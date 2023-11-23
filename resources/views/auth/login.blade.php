@@ -3,9 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Inventory Desa | Log in</title>
 
-    <link rel="icon" href="{{asset('assets/web-config/pancasila.png')}}">
+    @php
+        $aplikasi = App\Models\ApplicationName::first();
+    @endphp
+    <title>Login - {{$aplikasi->application_owner}}</title>
+    <link rel="icon" href="{{asset('assets/web-config/' . $aplikasi->application_logo)}}">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -19,8 +22,8 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <img src="{{asset('assets/web-config/pancasila.png')}}" alt="Logo Desa" width="100px"><br>
-            <a href="{{url('/')}}"><b>Inventory</b> Desa</a>
+            <img src="{{asset('assets/web-config/' . $aplikasi->application_logo)}}" alt="Logo Desa" width="100px"><br>
+            <a href="{{url('/')}}"><b>{{$aplikasi->application_name}}</b> <br>{{$aplikasi->application_owner}}</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
