@@ -24,17 +24,17 @@ Secara keseluruhan, web aplikasi peminjaman barang dan fasilitas desa tidak hany
 - Database: mySQL
 
 **Langkah-langkah menggunakan Aplikasi**
-- Clone project dengan code
+1. Clone project dengan code
 ============================================================
 + git clone https://gitlab.com/hendrayna55/inventory-desa.git
 ============================================================
-- Import inventory-desa.sql ke database
-- sesuaikan database pada .env
-- update composer
+2. Import inventory-desa.sql ke database
+3. sesuaikan database pada .env
+4. update composer
 ============================================================
 + composer update
 ============================================================
-- Aplikasi Web siap digunakan
+5. Aplikasi Web siap digunakan
 
 **USE CASE PRIORITY**
 | Use Case                     | Priority | Status |
