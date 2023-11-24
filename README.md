@@ -1,78 +1,55 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+**Project Hendra Ahmadillah : Aplikasi Peminjaman Barang dan Fasilitas Desa**
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+- Developer : Hendra Yanuari Noer Ahmadillah
+- Front-End : Hendra Yanuari Noer Ahmadillah
+- Back-End  : Hendra Yanuari Noer Ahmadillah
 
-## About Laravel
+**Deskrispi Aplikasi**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Web aplikasi peminjaman barang dan fasilitas desa adalah platform inovatif yang dirancang untuk memudahkan penduduk desa dalam meminjam berbagai barang dan fasilitas yang tersedia di lingkungan mereka. Dibangun dengan tujuan memperkuat keterlibatan komunitas dan memfasilitasi pertukaran barang secara efisien, aplikasi ini menawarkan sejumlah fitur yang memudahkan proses peminjaman.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Antarmuka yang ramah pengguna memungkinkan pengguna untuk menjelajahi katalog barang yang tersedia dengan mudah. Setiap barang atau fasilitas memiliki deskripsi lengkap, foto, dan ketersediaan yang terupdate secara real-time, memudahkan penduduk desa untuk memilih apa yang mereka butuhkan.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Penduduk desa dapat melakukan peminjaman melalui aplikasi dengan beberapa klik saja. Mereka dapat menentukan tanggal, waktu, dan durasi peminjaman sesuai kebutuhan mereka. Selain itu, fitur notifikasi memastikan bahwa peminjam dan pemilik barang menerima pemberitahuan secara otomatis mengenai permintaan peminjaman, pengembalian, atau informasi penting lainnya.
 
-## Learning Laravel
+Aplikasi ini juga memudahkan koordinasi antara peminjam dan pemilik barang. Misalnya, dengan fitur obrolan atau pesan internal yang memungkinkan mereka berkomunikasi tentang detail pengambilan, pengembalian, atau hal lain yang berkaitan dengan peminjaman.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Keamanan dan keandalan sistem adalah prioritas utama, dengan sistem verifikasi yang ketat untuk memastikan integritas transaksi dan informasi pengguna. Selain itu, aplikasi ini mungkin juga memiliki fitur penilaian dan ulasan, memungkinkan pengguna untuk memberikan umpan balik mengenai pengalaman mereka, sehingga memperkuat kepercayaan di antara anggota komunitas desa.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Secara keseluruhan, web aplikasi peminjaman barang dan fasilitas desa tidak hanya memudahkan akses terhadap barang-barang yang dibutuhkan, tetapi juga memperkuat koneksi sosial dan kerjasama di dalam komunitas desa. Dengan menyediakan platform yang praktis dan efisien, aplikasi ini bertujuan untuk meningkatkan kualitas hidup serta interaksi antarwarga di lingkungan desa.
 
-## Laravel Sponsors
+**Teknologi yang Digunakan**
+- Bahasa Pemrograman: HTML, CSS, JavaScript, PHP, SQL
+- Framework: Laravel 7.0 dan Bootstrap 4.5
+- Database: mySQL
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+**Langkah-langkah menggunakan Aplikasi**
+- Clone project dengan code
+============================================================
++              git clone https://gitlab.com/hendrayna55/inventory-desa.git     +
+============================================================
+- Import inventory-desa.sql ke database
+- sesuaikan database pada .env
+- update composer
+============================================================
++              composer update     +
+============================================================
+- Aplikasi Web siap digunakan
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**USE CASE PRIORITY**
+| Use Case                     | Priority | Status |
+|------------------------------|----------|--------|
+| Register          | Tinggi   | **Selesai** |
+| Login          | Tinggi   | **Selesai** |
+| CRUD User oleh Admin          | Tinggi   | **Selesai** |
+| CRUD Data Barang oleh Admin          | Tinggi   | **Selesai** |
+| CRUD Data Fasilitas oleh Admin          | Tinggi   | **Selesai** |
+| CRUD Peminjaman Barang oleh Admin          | Tinggi   | **Selesai** |
+| CRUD Peminjaman Fasilitas oleh Admin          | Tinggi   | **Selesai** |
+| CRUD Peminjaman Barang oleh User          | Tinggi   | **Selesai** |
+| CRUD Peminjaman Fasilitas oleh User          | Tinggi   | **Selesai** |
+| CRU Profil Biodata          | Tinggi   | **Selesai** |
+| CRU Informasi Pada Dashboard          | Tinggi   | **Selesai** |
+| CRUD Narahubung          | Tinggi   | **Selesai** |
+| Ubah Password Akun          | Tinggi   | **Selesai** |
+| CRU Identitas Web Aplikasi          | Tinggi   | **Selesai** |
