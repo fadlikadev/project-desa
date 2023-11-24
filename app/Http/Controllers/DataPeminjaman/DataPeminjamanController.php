@@ -24,10 +24,17 @@ class DataPeminjamanController extends Controller
         $dataPinjamBarangUser = DataPeminjamanBarang::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
         $dataPinjamFasilitasUser = DataPeminjamanFasilitas::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
 
-        if(Auth::user()->role_id == 1){
+        if((Auth::user()->role_id == 1))
+        {
             return view('data-peminjaman.index', compact('dataPinjamBarang', 'dataPinjamFasilitas'));
-        }else{
+        }
+        elseif(((Auth::user()->biodata->tempat_lahir != null) && (Auth::user()->biodata->tanggal_lahir != null) && (Auth::user()->biodata->alamat != null)))
+        {
             return view('data-peminjaman.index', compact('dataPinjamBarangUser', 'dataPinjamFasilitasUser'));
+        }
+        else
+        {
+            abort(403);
         }
     }
 
@@ -35,7 +42,19 @@ class DataPeminjamanController extends Controller
     {
         $dataBarang = DataBarang::orderBy('nama_barang', 'asc')->get();
         $peminjams = User::where('role_id', 2)->get();
-        return view('data-peminjaman.barang.create', compact('dataBarang', 'peminjams'));
+
+        if((Auth::user()->role_id == 1))
+        {
+            return view('data-peminjaman.barang.create', compact('dataBarang', 'peminjams'));
+        }
+        elseif(((Auth::user()->biodata->tempat_lahir != null) && (Auth::user()->biodata->tanggal_lahir != null) && (Auth::user()->biodata->alamat != null)))
+        {
+            return view('data-peminjaman.barang.create', compact('dataBarang', 'peminjams'));
+        }
+        else
+        {
+            abort(403);
+        }
     }
 
     public function getbarang(Request $request)
@@ -84,9 +103,16 @@ class DataPeminjamanController extends Controller
         $dataBarang = DataBarang::orderBy('nama_barang', 'asc')->get();
         $peminjams = User::where('role_id', 2)->get();
 
-        if((Auth::user()->id == $user->id) || (Auth::user()->role_id == 1)){
+        if((Auth::user()->role_id == 1))
+        {
             return view('data-peminjaman.barang.edit', compact('dataBarang', 'peminjams', 'dataPinjaman'));
-        }else{
+        }
+        elseif((Auth::user()->id == $user->id) && (Auth::user()->biodata->tempat_lahir != null) && (Auth::user()->biodata->tanggal_lahir != null) && (Auth::user()->biodata->alamat != null))
+        {
+            return view('data-peminjaman.barang.edit', compact('dataBarang', 'peminjams', 'dataPinjaman'));
+        }
+        else
+        {
             abort(403);
         }
     }
@@ -238,7 +264,21 @@ class DataPeminjamanController extends Controller
     {
         $dataFasilitas = DataFasilitas::orderBy('nama_fasilitas', 'asc')->get();
         $peminjams = User::where('role_id', 2)->get();
-        return view('data-peminjaman.fasilitas.create', compact('dataFasilitas', 'peminjams'));
+
+        if((Auth::user()->role_id == 1))
+        {
+            return view('data-peminjaman.fasilitas.create', compact('dataFasilitas', 'peminjams'));
+        }
+        elseif((Auth::user()->biodata->tempat_lahir != null) && (Auth::user()->biodata->tanggal_lahir != null) && (Auth::user()->biodata->alamat != null))
+        {
+            return view('data-peminjaman.fasilitas.create', compact('dataFasilitas', 'peminjams'));
+        }
+        else
+        {
+            abort(403);
+        }
+
+        
     }
 
     public function getFasilitas(Request $request)
@@ -370,9 +410,16 @@ class DataPeminjamanController extends Controller
         $dataFasilitas = DataFasilitas::orderBy('nama_fasilitas', 'asc')->get();
         $peminjams = User::where('role_id', 2)->get();
 
-        if((Auth::user()->id == $user->id) || (Auth::user()->role_id == 1)){
+        if((Auth::user()->role_id == 1))
+        {
             return view('data-peminjaman.fasilitas.edit', compact('dataFasilitas', 'peminjams', 'dataPinjaman'));
-        }else{
+        }
+        elseif((Auth::user()->id == $user->id) && (Auth::user()->biodata->tempat_lahir != null) && (Auth::user()->biodata->tanggal_lahir != null) && (Auth::user()->biodata->alamat != null))
+        {
+            return view('data-peminjaman.fasilitas.edit', compact('dataFasilitas', 'peminjams', 'dataPinjaman'));
+        }
+        else
+        {
             abort(403);
         }
     }

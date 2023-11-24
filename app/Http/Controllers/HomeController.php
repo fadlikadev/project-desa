@@ -11,6 +11,8 @@ use App\Models\DataBarang;
 use App\Models\DataFasilitas;
 use App\Models\DataPeminjamanBarang;
 use App\Models\DataPeminjamanFasilitas;
+use Carbon\Carbon;
+use App\Models\InformasiDashboard;
 
 class HomeController extends Controller
 {
@@ -31,6 +33,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $today = date('d M y', strtotime(Carbon::now()));
         $allUser = User::where('role_id', 2)->count();
         $allAdmin = User::where('role_id', 1)->count();
         $userVerified = (Biodata::where('status_verifikasi', 1)->count()) - $allAdmin;
@@ -39,6 +42,22 @@ class HomeController extends Controller
         $totalFasilitas = DataFasilitas::all()->count();
         $totalAjuanBarang = DataPeminjamanBarang::all()->count();
         $totalAjuanFasilitas = DataPeminjamanFasilitas::all()->count();
+        $informasi = InformasiDashboard::first();
+
+        // Klasifikasi User
+        $lakiLaki = Biodata::where('jenis_kelamin', 'Laki-Laki')->count() - $allAdmin;
+        $perempuan = Biodata::where('jenis_kelamin', 'Perempuan')->count();
+
+        // Admin
+        $dataPinjamBarang = DataPeminjamanBarang::where('status_pinjaman', 'Menunggu Persetujuan')->orderBy('created_at', 'desc')->get();
+        $dataPinjamFasilitas = DataPeminjamanFasilitas::where('status_pinjaman', 'Menunggu Persetujuan')->orderBy('created_at', 'desc')->get();
+
+        // User
+        $dataPinjamBarangUser = DataPeminjamanBarang::where('user_id', Auth::user()->id)->orderBy('created_at', 'asc')->get();
+        $dataPinjamFasilitasUser = DataPeminjamanFasilitas::where('user_id', Auth::user()->id)->orderBy('created_at', 'asc')->get();
+
+        // 8 New User
+        $newUser = User::orderBy('created_at', 'desc')->where('role_id', 2)->limit(8)->get();
 
         if(Auth::user()->role_id == 1){
             // ADMIN
@@ -51,7 +70,10 @@ class HomeController extends Controller
             $ajuanBarangSetuju = DataPeminjamanBarang::where('status_pinjaman', 'Disetujui')->count();
             $ajuanBarangWait = DataPeminjamanBarang::where('status_pinjaman', 'Menunggu Persetujuan')->count();
             $ajuanBarangReject = DataPeminjamanBarang::where('status_pinjaman', 'Ditolak')->count();
-        }else{
+
+            
+        }
+        else{
             // USER
             // Ajuan Fasilitas
             $ajuanFasilitasSetuju = DataPeminjamanFasilitas::where('user_id', Auth::user()->id)->where('status_pinjaman', 'Disetujui')->count();
@@ -64,6 +86,6 @@ class HomeController extends Controller
             $ajuanBarangReject = DataPeminjamanBarang::where('user_id', Auth::user()->id)->where('status_pinjaman', 'Ditolak')->count();
         }
         
-        return view('dashboard.index', compact('allUser', 'userVerified', 'userNotVerified', 'totalBarang', 'totalFasilitas', 'totalAjuanBarang', 'totalAjuanFasilitas', 'ajuanFasilitasSetuju', 'ajuanFasilitasWait', 'ajuanFasilitasReject', 'ajuanBarangSetuju', 'ajuanBarangWait', 'ajuanBarangReject'));
+        return view('dashboard.index', compact('allUser', 'userVerified', 'userNotVerified', 'totalBarang', 'totalFasilitas', 'totalAjuanBarang', 'totalAjuanFasilitas', 'ajuanFasilitasSetuju', 'ajuanFasilitasWait', 'ajuanFasilitasReject', 'ajuanBarangSetuju', 'ajuanBarangWait', 'ajuanBarangReject', 'lakiLaki', 'perempuan', 'dataPinjamBarang', 'dataPinjamFasilitas', 'newUser', 'today', 'informasi', 'dataPinjamBarangUser', 'dataPinjamFasilitasUser'));
     }
 }

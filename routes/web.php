@@ -12,6 +12,7 @@ use App\Http\Controllers\Profil\ProfilController;
 use App\Http\Controllers\DataAplikasi\DataAplikasiController;
 use App\Http\Controllers\Akun\UbahPassword\UbahPasswordController;
 use App\Http\Controllers\Narahubung\NarahubungController;
+use App\Http\Controllers\InformasiDashboard\InformasiDashboardController;
 
 /*
 |--------------------------------------------------------------------------

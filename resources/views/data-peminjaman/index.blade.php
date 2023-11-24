@@ -247,151 +247,151 @@
                                                 <!-- /.modal -->
                                             @endforeach
                                         @else
-                                        @foreach ($dataPinjamBarangUser as $item)
-                                            <tr>
-                                                <td class="text-center align-middle">{{date('H:i:s - d M Y', strtotime($item->created_at))}}</td>
-                                                <td class="text-center align-middle">{{$item->barang->nama_barang}}</td>
-                                                <td class="text-center align-middle"><a href="{{url('/profile/' . $item->user->id)}}">{{$item->user->nama_lengkap}}</a></td>
-                                                <td class="text-center align-middle">{{$item->jumlah_pinjaman}} {{$item->barang->satuan_barang}}</td>
-                                                <td class="text-center align-middle">{{date('d M Y', strtotime($item->tanggal_pinjam))}}</td>
-                                                <td class="text-center align-middle">{{date('d M Y', strtotime($item->tanggal_kembali))}}</td>
-                                                <td class="text-center align-middle">{{$item->keterangan}}</td>
+                                            @foreach ($dataPinjamBarangUser as $item)
+                                                <tr>
+                                                    <td class="text-center align-middle">{{date('H:i:s - d M Y', strtotime($item->created_at))}}</td>
+                                                    <td class="text-center align-middle">{{$item->barang->nama_barang}}</td>
+                                                    <td class="text-center align-middle"><a href="{{url('/profile/' . $item->user->id)}}">{{$item->user->nama_lengkap}}</a></td>
+                                                    <td class="text-center align-middle">{{$item->jumlah_pinjaman}} {{$item->barang->satuan_barang}}</td>
+                                                    <td class="text-center align-middle">{{date('d M Y', strtotime($item->tanggal_pinjam))}}</td>
+                                                    <td class="text-center align-middle">{{date('d M Y', strtotime($item->tanggal_kembali))}}</td>
+                                                    <td class="text-center align-middle">{{$item->keterangan}}</td>
 
-                                                @if ($item->status_pinjaman == "Menunggu Persetujuan")
-                                                    <td class="text-center align-middle text-warning">
-                                                        <b>{{$item->status_pinjaman}}</b>
-                                                    </td>
-                                                @elseif($item->status_pinjaman == "Disetujui")
-                                                    <td class="text-center align-middle text-success">
-                                                        <b>{{$item->status_pinjaman}}</b>
-                                                    </td>
-                                                @else
-                                                    <td class="text-center align-middle text-danger">
-                                                        <b>{{$item->status_pinjaman}}</b>
-                                                    </td>
-                                                @endif
-
-                                                <td class="text-center align-middle">
-                                                    @if ($item->status_pinjaman == "Disetujui")
-                                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-hapus{{$item->id}}"><i class="fas fa-trash-alt"></i></button>
-                                                    @elseif($item->status_pinjaman == "Menunggu Persetujuan")
-                                                        @if (Auth::user()->role_id == 1)
-                                                            <a href="{{url('/data-peminjaman/barang/edit/' . $item->id)}}"><button class="btn btn-sm btn-success mx-1"><i class="fas fa-edit"></i></button></a>
-                                                        @endif
-                                                        
-                                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-hapus{{$item->id}}"><i class="fas fa-trash-alt"></i></button>
+                                                    @if ($item->status_pinjaman == "Menunggu Persetujuan")
+                                                        <td class="text-center align-middle text-warning">
+                                                            <b>{{$item->status_pinjaman}}</b>
+                                                        </td>
+                                                    @elseif($item->status_pinjaman == "Disetujui")
+                                                        <td class="text-center align-middle text-success">
+                                                            <b>{{$item->status_pinjaman}}</b>
+                                                        </td>
                                                     @else
-                                                        <a href="{{url('/data-peminjaman/barang/edit/' . $item->id)}}"><button class="btn btn-sm btn-success mx-1"><i class="fas fa-edit"></i></button></a>
-
-                                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-hapus{{$item->id}}"><i class="fas fa-trash-alt"></i></button>
+                                                        <td class="text-center align-middle text-danger">
+                                                            <b>{{$item->status_pinjaman}}</b>
+                                                        </td>
                                                     @endif
-                                                </td>
-                                            </tr>
 
-                                            <!-- Modal Approve Akun -->
-                                            <div class="modal fade" id="modal-approve{{$item->id}}">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <form action="{{url('/data-peminjaman/barang/approve/' . $item->id)}}" method="post">
-                                                            @csrf
-                                                            @method('put')
+                                                    <td class="text-center align-middle">
+                                                        @if ($item->status_pinjaman == "Disetujui")
+                                                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-hapus{{$item->id}}"><i class="fas fa-trash-alt"></i></button>
+                                                        @elseif($item->status_pinjaman == "Menunggu Persetujuan")
+                                                            @if (Auth::user()->role_id == 1)
+                                                                <a href="{{url('/data-peminjaman/barang/edit/' . $item->id)}}"><button class="btn btn-sm btn-success mx-1"><i class="fas fa-edit"></i></button></a>
+                                                            @endif
+                                                            
+                                                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-hapus{{$item->id}}"><i class="fas fa-trash-alt"></i></button>
+                                                        @else
+                                                            <a href="{{url('/data-peminjaman/barang/edit/' . $item->id)}}"><button class="btn btn-sm btn-success mx-1"><i class="fas fa-edit"></i></button></a>
 
-                                                            <div class="modal-header bg-success text-center">
-                                                                <h4 class="modal-title">Persetujuan Peminjaman Barang</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p class="text-center">
-                                                                    <div class="row justify-content-center text-sm">
-                                                                        <div class="col-4 col-lg-3">
-                                                                            Nama Barang<br>
-                                                                            Nama Peminjam<br>
-                                                                            Tanggal Pinjam<br>
-                                                                            Tanggal Kembali<br>
-                                                                            Keperluan<br>
+                                                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-hapus{{$item->id}}"><i class="fas fa-trash-alt"></i></button>
+                                                        @endif
+                                                    </td>
+                                                </tr>
 
-                                                                        </div>
-                                                                        <div class="col-8 col-lg-8">
-                                                                            : {{$item->barang->nama_barang}}<br>
-                                                                            : {{$item->user->nama_lengkap}}<br>
-                                                                            : {{date('d M Y', strtotime($item->tanggal_pinjam))}}<br>
-                                                                            : {{date('d M Y', strtotime($item->tanggal_kembali))}}<br>
-                                                                            : {{$item->keterangan}}<br>
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="row text-center">
-                                                                        <div class="col-12">
-                                                                            <label for="status_pinjaman" class="col-form-label" style="margin-bottom: -100px; margin-top: 25px">Status Pinjaman</label>
-                                                                            <select name="status_pinjaman" id="" class="mt-2 form-control @error('status_pinjaman') is-invalid @enderror">    
-                                                                                <option value="Menunggu Persetujuan" <?php if($item->status_pinjaman == "Menunggu Persetujuan") echo 'selected' ?>>
-                                                                                    Menunggu Persetujuan
-                                                                                </option>
-                                                                                <option value="Disetujui" <?php if($item->status_pinjaman == "Disetujui") echo 'selected' ?>>
-                                                                                    Disetujui
-                                                                                </option>
-                                                                                <option value="Ditolak" <?php if($item->status_pinjaman == "Ditolak") echo 'selected' ?>>
-                                                                                    Ditolak
-                                                                                </option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </p>
-                                                            </div>
-                                                            <div class="modal-footer justify-content-between">
-                                                                <button type="button" class="btn btn-info float-right" data-dismiss="modal">Tutup</button>
-                                                                <button type="submit" class="btn btn-success float-right">Simpan</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                    <!-- /.modal-content -->
-                                                </div>
-                                                <!-- /.modal-dialog -->
-                                            </div>
-                                            <!-- /.modal -->
-
-                                            <!-- Modal Hapus -->
-                                            <div class="modal fade" id="modal-hapus{{$item->id}}">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header bg-danger">
-                                                            <h4 class="modal-title">Hapus Data Peminjaman Barang</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                        <div class="row justify-content-center text-sm">
-                                                            <div class="col-4 col-lg-3">
-                                                                Nama Barang<br>
-                                                                Nama Peminjam<br>
-                                                                Tanggal Pinjam<br>
-                                                                Tanggal Kembali<br>
-                                                                Keperluan<br>
-
-                                                            </div>
-                                                            <div class="col-8 col-lg-8">
-                                                                : {{$item->barang->nama_barang}}<br>
-                                                                : {{$item->user->nama_lengkap}}<br>
-                                                                : {{date('d M Y', strtotime($item->tanggal_pinjam))}}<br>
-                                                                : {{date('d M Y', strtotime($item->tanggal_kembali))}}<br>
-                                                                : {{$item->keterangan}}<br>
-
-                                                            </div>
-                                                        </div>
-                                                        </div>
-                                                        <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                                                            <form action="{{url('/data-peminjaman/barang/' . $item->id)}}" method="post" class="">
+                                                <!-- Modal Approve Akun -->
+                                                <div class="modal fade" id="modal-approve{{$item->id}}">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <form action="{{url('/data-peminjaman/barang/approve/' . $item->id)}}" method="post">
                                                                 @csrf
-                                                                @method('DELETE')
-                                                                <button class="btn btn-danger btn-sm mr-2" data-toggle="modal" data-target="#modal-hapus">Hapus</button>
+                                                                @method('put')
+
+                                                                <div class="modal-header bg-success text-center">
+                                                                    <h4 class="modal-title">Persetujuan Peminjaman Barang</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p class="text-center">
+                                                                        <div class="row justify-content-center text-sm">
+                                                                            <div class="col-4 col-lg-3">
+                                                                                Nama Barang<br>
+                                                                                Nama Peminjam<br>
+                                                                                Tanggal Pinjam<br>
+                                                                                Tanggal Kembali<br>
+                                                                                Keperluan<br>
+
+                                                                            </div>
+                                                                            <div class="col-8 col-lg-8">
+                                                                                : {{$item->barang->nama_barang}}<br>
+                                                                                : {{$item->user->nama_lengkap}}<br>
+                                                                                : {{date('d M Y', strtotime($item->tanggal_pinjam))}}<br>
+                                                                                : {{date('d M Y', strtotime($item->tanggal_kembali))}}<br>
+                                                                                : {{$item->keterangan}}<br>
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row text-center">
+                                                                            <div class="col-12">
+                                                                                <label for="status_pinjaman" class="col-form-label" style="margin-bottom: -100px; margin-top: 25px">Status Pinjaman</label>
+                                                                                <select name="status_pinjaman" id="" class="mt-2 form-control @error('status_pinjaman') is-invalid @enderror">    
+                                                                                    <option value="Menunggu Persetujuan" <?php if($item->status_pinjaman == "Menunggu Persetujuan") echo 'selected' ?>>
+                                                                                        Menunggu Persetujuan
+                                                                                    </option>
+                                                                                    <option value="Disetujui" <?php if($item->status_pinjaman == "Disetujui") echo 'selected' ?>>
+                                                                                        Disetujui
+                                                                                    </option>
+                                                                                    <option value="Ditolak" <?php if($item->status_pinjaman == "Ditolak") echo 'selected' ?>>
+                                                                                        Ditolak
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="modal-footer justify-content-between">
+                                                                    <button type="button" class="btn btn-info float-right" data-dismiss="modal">Tutup</button>
+                                                                    <button type="submit" class="btn btn-success float-right">Simpan</button>
+                                                                </div>
                                                             </form>
                                                         </div>
+                                                        <!-- /.modal-content -->
                                                     </div>
-                                                    <!-- /.modal-content -->
+                                                    <!-- /.modal-dialog -->
                                                 </div>
-                                                <!-- /.modal-dialog -->
-                                            </div>
-                                            <!-- /.modal -->
-                                        @endforeach
+                                                <!-- /.modal -->
+
+                                                <!-- Modal Hapus -->
+                                                <div class="modal fade" id="modal-hapus{{$item->id}}">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-danger">
+                                                                <h4 class="modal-title">Hapus Data Peminjaman Barang</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                            <div class="row justify-content-center text-sm">
+                                                                <div class="col-4 col-lg-3">
+                                                                    Nama Barang<br>
+                                                                    Nama Peminjam<br>
+                                                                    Tanggal Pinjam<br>
+                                                                    Tanggal Kembali<br>
+                                                                    Keperluan<br>
+
+                                                                </div>
+                                                                <div class="col-8 col-lg-8">
+                                                                    : {{$item->barang->nama_barang}}<br>
+                                                                    : {{$item->user->nama_lengkap}}<br>
+                                                                    : {{date('d M Y', strtotime($item->tanggal_pinjam))}}<br>
+                                                                    : {{date('d M Y', strtotime($item->tanggal_kembali))}}<br>
+                                                                    : {{$item->keterangan}}<br>
+
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                                                                <form action="{{url('/data-peminjaman/barang/' . $item->id)}}" method="post" class="">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button class="btn btn-danger btn-sm mr-2" data-toggle="modal" data-target="#modal-hapus">Hapus</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.modal-content -->
+                                                    </div>
+                                                    <!-- /.modal-dialog -->
+                                                </div>
+                                                <!-- /.modal -->
+                                            @endforeach
                                         @endif
                                     </tbody>
                                 </table>
