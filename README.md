@@ -32,6 +32,10 @@ composer update
 ```
 5. Aplikasi Web siap digunakan
 
+### Akses Admin
+- Email : admin@gmail.com
+- Password : superadmin
+
 ### USE CASE PRIORITY
 | Use Case                     | Priority | Status |
 |------------------------------|----------|--------|
