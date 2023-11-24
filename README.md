@@ -1,4 +1,4 @@
-**Project Hendra Ahmadillah : Aplikasi Peminjaman Barang dan Fasilitas Desa**
+### Project Hendra Ahmadillah : Aplikasi Peminjaman Barang dan Fasilitas Desa
 
 - Developer : Hendra Yanuari Noer Ahmadillah
 - Front-End : Hendra Yanuari Noer Ahmadillah
@@ -10,33 +10,29 @@ Web aplikasi peminjaman barang dan fasilitas desa adalah platform inovatif yang 
 
 Antarmuka yang ramah pengguna memungkinkan pengguna untuk menjelajahi katalog barang yang tersedia dengan mudah. Setiap barang atau fasilitas memiliki deskripsi lengkap, foto, dan ketersediaan yang terupdate secara real-time, memudahkan penduduk desa untuk memilih apa yang mereka butuhkan.
 
-Penduduk desa dapat melakukan peminjaman melalui aplikasi dengan beberapa klik saja. Mereka dapat menentukan tanggal, waktu, dan durasi peminjaman sesuai kebutuhan mereka. Selain itu, fitur notifikasi memastikan bahwa peminjam dan pemilik barang menerima pemberitahuan secara otomatis mengenai permintaan peminjaman, pengembalian, atau informasi penting lainnya.
-
-Aplikasi ini juga memudahkan koordinasi antara peminjam dan pemilik barang. Misalnya, dengan fitur obrolan atau pesan internal yang memungkinkan mereka berkomunikasi tentang detail pengambilan, pengembalian, atau hal lain yang berkaitan dengan peminjaman.
-
-Keamanan dan keandalan sistem adalah prioritas utama, dengan sistem verifikasi yang ketat untuk memastikan integritas transaksi dan informasi pengguna. Selain itu, aplikasi ini mungkin juga memiliki fitur penilaian dan ulasan, memungkinkan pengguna untuk memberikan umpan balik mengenai pengalaman mereka, sehingga memperkuat kepercayaan di antara anggota komunitas desa.
+Penduduk desa dapat melakukan peminjaman melalui aplikasi dengan beberapa klik saja. Mereka dapat menentukan tanggal, waktu, dan durasi peminjaman sesuai kebutuhan mereka. Keamanan dan keandalan sistem adalah prioritas utama, dengan sistem verifikasi yang ketat untuk memastikan integritas transaksi dan informasi pengguna.
 
 Secara keseluruhan, web aplikasi peminjaman barang dan fasilitas desa tidak hanya memudahkan akses terhadap barang-barang yang dibutuhkan, tetapi juga memperkuat koneksi sosial dan kerjasama di dalam komunitas desa. Dengan menyediakan platform yang praktis dan efisien, aplikasi ini bertujuan untuk meningkatkan kualitas hidup serta interaksi antarwarga di lingkungan desa.
 
-**Teknologi yang Digunakan**
+### Teknologi yang Digunakan
 - Bahasa Pemrograman: HTML, CSS, JavaScript, PHP, SQL
 - Framework: Laravel 7.0 dan Bootstrap 4.5
 - Database: mySQL
 
 **Langkah-langkah menggunakan Aplikasi**
 1. Clone project dengan code
-============================================================
-+ git clone https://gitlab.com/hendrayna55/inventory-desa.git
-============================================================
+```shell
+git clone https://gitlab.com/hendrayna55/inventory-desa.git
+```
 2. Import inventory-desa.sql ke database
 3. sesuaikan database pada .env
 4. update composer
-============================================================
-+ composer update
-============================================================
+```shell
+composer update
+```
 5. Aplikasi Web siap digunakan
 
-**USE CASE PRIORITY**
+### USE CASE PRIORITY
 | Use Case                     | Priority | Status |
 |------------------------------|----------|--------|
 | Register          | Tinggi   | **Selesai** |
