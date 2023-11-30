@@ -1,8 +1,8 @@
-### Project Hendra Ahmadillah : Aplikasi Peminjaman Barang dan Fasilitas Desa
+### Project : Aplikasi Peminjaman Barang dan Fasilitas Desa
 
-- Developer : Hendra Yanuari Noer Ahmadillah
-- Front-End : Hendra Yanuari Noer Ahmadillah
-- Back-End  : Hendra Yanuari Noer Ahmadillah
+- Developer : Tim Developer Desa Bojongsoang
+- Front-End : Mohamad Fadlika
+- Back-End  : Iqbal Al-Bantani
 
 **Deskrispi Aplikasi**
 
@@ -22,7 +22,7 @@ Secara keseluruhan, web aplikasi peminjaman barang dan fasilitas desa tidak hany
 **Langkah-langkah menggunakan Aplikasi**
 1. Clone project dengan code
 ```shell
-git clone https://gitlab.com/hendrayna55/inventory-desa.git
+https://github.com/fadlikadev/project-desa.git
 ```
 2. Import inventory-desa.sql ke database
 3. sesuaikan database pada .env
@@ -33,8 +33,7 @@ composer update
 5. Aplikasi Web siap digunakan
 
 ### Akses Admin
-- Email : admin@gmail.com
-- Password : superadmin
+Membuat account admin dan bisa diverifikasi memlalui database (Harus migrasi Database terlebih dahulu)
 
 ### USE CASE PRIORITY
 | Use Case                     | Priority | Status |
